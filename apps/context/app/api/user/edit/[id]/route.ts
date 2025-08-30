@@ -1,0 +1,1 @@
+export { PUT } from '@workspace/api/src/handlers/user/edit';
