@@ -17,13 +17,14 @@ const currencySymbols= {
 };
 
 export default function ProductCard({ id, title, price }: ProductCardProps) {
-  console.log("ProductCard rendered")
+  console.log("ProductCard")
 
   const { currency, convertPrice } = useCurrencyStore();
+  // const addToCart = useCartStore(state => state.addToCart);
   const { addToCart } = useCartStore()
   
   const handleAddToCart = () => {
-    addToCart({ id, title, price });
+    addToCart({ id, title, price, quantity: 1 });
   };
 
   return (

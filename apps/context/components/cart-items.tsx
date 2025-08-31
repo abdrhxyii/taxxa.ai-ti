@@ -22,6 +22,7 @@ const currencySymbols= {
 };
 
 export default function CartItems() {
+  console.log("CartItems")
   const { cartItems, updateQuantity } = useCart();
   const { currency, convertPrice } = useCurrency();
   

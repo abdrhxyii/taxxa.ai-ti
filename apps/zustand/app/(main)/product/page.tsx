@@ -12,6 +12,7 @@ type Product = {
 };
 
 export default function ProductsPage() {
+  console.log("ProductsPage")
 
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);

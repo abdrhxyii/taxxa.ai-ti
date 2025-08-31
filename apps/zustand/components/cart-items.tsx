@@ -21,9 +21,11 @@ const currencySymbols= {
 };
 
 export default function CartItems() {
-  console.log("cartItems rendered with")
+  console.log("CartItems")
   const { currency, convertPrice } = useCurrencyStore()
-  const { cartItems, updateQuantity } = useCartStore()
+  const cartItems = useCartStore(state => state.cartItems);
+  const updateQuantity = useCartStore(state => state.updateQuantity);
+
 
   const total = cartItems.reduce(
     (sum, item) => sum + convertPrice(item.price) * item.quantity,

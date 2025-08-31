@@ -8,11 +8,12 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 export default function Navbar() {
-  console.log("navbar lgo")
+  console.log("navbar")
   const router = useRouter()
   const { logout, user } = useUserStore()
   const { currency, setCurrency } = useCurrencyStore()
-  const { cartCount } = useCartStore()
+  const { cartItems } = useCartStore()
+  // const cartCount = useCartStore(state => state.cartItems.length);
 
   const handleLogout = () => {
     logout()
@@ -57,7 +58,7 @@ export default function Navbar() {
               <ShoppingCart className="h-4 w-4" />
               <span>Cart</span>
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                {cartCount}
+                {cartItems.length}
               </span>
             </Button>
             

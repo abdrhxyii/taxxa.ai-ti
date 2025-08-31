@@ -10,10 +10,10 @@ interface CartItem {
 
 interface CartStore {
   cartItems: CartItem[];
-  cartCount: number;
-  addToCart: (item: { id: number; title: string; price: number }) => void;
+  addToCart: (item: CartItem) => void;
   updateQuantity: (id: number, change: number) => void;
   clearCart: () => void;
+  getCartCount: () => number; 
 }
 
 export const useCartStore = create<CartStore>()(
@@ -21,40 +21,34 @@ export const useCartStore = create<CartStore>()(
     persist(
       (set, get) => ({
         cartItems: [],
-        cartCount: 0,
         addToCart: (item) => {
           set((state) => {
-            const existingItem = state.cartItems.find((i) => i.id === item.id);
+            const existingItem = state.cartItems.find(i => i.id === item.id);
             if (existingItem) {
               return {
-                cartItems: state.cartItems.map((i) =>
+                cartItems: state.cartItems.map(i =>
                   i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
                 ),
-                cartCount: state.cartItems.length,
               };
             }
             return {
               cartItems: [...state.cartItems, { ...item, quantity: 1 }],
-              cartCount: state.cartItems.length + 1,
             };
           });
         },
         updateQuantity: (id, change) => {
-          set((state) => {
-            const updatedItems = state.cartItems
-              .map((item) =>
+          set((state) => ({
+            cartItems: state.cartItems
+              .map(item =>
                 item.id === id
                   ? { ...item, quantity: Math.max(0, item.quantity + change) }
                   : item
               )
-              .filter((item) => item.quantity > 0);
-            return {
-              cartItems: updatedItems,
-              cartCount: updatedItems.length,
-            };
-          });
+              .filter(item => item.quantity > 0)
+          }));
         },
-        clearCart: () => set({ cartItems: [], cartCount: 0 }),
+        clearCart: () => set({ cartItems: [] }),
+        getCartCount: () => get().cartItems.length, 
       }),
       {
         name: "cart-storage",

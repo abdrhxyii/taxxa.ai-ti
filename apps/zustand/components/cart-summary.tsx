@@ -18,6 +18,7 @@ const currencySymbols = {
 };
 
 export default function OrderSummary() {
+  console.log("OrderSummary")
   const router = useRouter()
   const { user } = useUserStore()
   const { currency, convertPrice } = useCurrencyStore()

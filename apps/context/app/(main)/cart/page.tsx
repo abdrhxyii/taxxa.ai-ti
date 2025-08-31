@@ -2,6 +2,7 @@ import CartItems from '@/components/cart-items';
 import OrderSummary from '@/components/cart-summary';
 
 export default function CartPage() {
+  console.log("CartPage")
   return (
     <div>
       <h1 className="text-2xl font-bold mb-6">Shopping Cart</h1>

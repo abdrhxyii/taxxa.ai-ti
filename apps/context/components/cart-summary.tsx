@@ -20,7 +20,7 @@ const currencySymbols = {
 export default function OrderSummary() {
   const router = useRouter()
   const { cartItems, clearCart } = useCart();
-  const { currency, convertPrice } = useCurrency();
+  const { convertPrice } = useCurrency();
   const { user } = useAuth()
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -83,7 +83,7 @@ export default function OrderSummary() {
             <div className="flex justify-between items-center">
               <span className="text-lg">Subtotal:</span>
               <span className="text-lg">
-                {currencySymbols[currency]}
+                {/* {currencySymbols[currency]} */}
                 {total.toFixed(2)}
               </span>
             </div>
@@ -91,7 +91,7 @@ export default function OrderSummary() {
           <div className="flex justify-between items-center">
             <span className="text-xl font-semibold">Total:</span>
             <span className="text-xl font-bold text-green-600">
-              {currencySymbols[currency]}
+              {/* {currencySymbols[currency]} */}
               {total.toFixed(2)}
             </span>
           </div>
