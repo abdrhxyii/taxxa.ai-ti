@@ -7,7 +7,6 @@ import { useCurrency } from "@/context/CurrencyContext";
 import { useCart } from "@/context/CartContext";
 
 export default function Navbar() {
-  console.log("navbar re-rendered");
 
   const router = useRouter()
   const { user, logout } = useAuth();

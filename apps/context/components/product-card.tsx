@@ -17,7 +17,6 @@ const currencySymbols= {
 };
 
 export default function ProductCard({ id, title, price }: ProductCardProps) {
-  console.log("ProductCard re-rendered");
 
   const { currency, convertPrice } = useCurrency();
   const { addToCart } = useCart()

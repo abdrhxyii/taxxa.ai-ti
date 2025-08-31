@@ -1,4 +1,3 @@
-import { useAuth } from "@/context/useAuth"
 import { Button } from "@workspace/ui/components/button"
 
 export default function Page() {

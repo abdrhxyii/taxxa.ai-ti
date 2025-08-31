@@ -12,6 +12,7 @@ type Product = {
 };
 
 export default function ProductsPage() {
+
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -44,6 +45,7 @@ export default function ProductsPage() {
             products.map((product) => (
               <ProductCard
                 key={product.id}
+                id={product.id}
                 title={product.title}
                 price={product.price}
               />

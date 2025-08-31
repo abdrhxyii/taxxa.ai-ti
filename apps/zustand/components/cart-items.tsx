@@ -1,9 +1,10 @@
 'use client';
 
+import { useCartStore } from "@/store/cartStore";
+import { useCurrencyStore } from "@/store/currencyStore";
 import { Button } from "@workspace/ui/components/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@workspace/ui/components/card";
 import { Plus, Minus } from "lucide-react";
-import { useState } from "react";
 
 interface CartItem {
   id: number;
@@ -12,26 +13,22 @@ interface CartItem {
   quantity: number;
 }
 
+const currencySymbols= {
+  USD: "$",
+  LKR: "Rs",
+  GBP: "£",
+  EUR: "€",
+};
+
 export default function CartItems() {
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    { id: 1, title: "Wireless Headphones", price: 99.99, quantity: 1 },
-    { id: 2, title: "Smartphone Case", price: 24.99, quantity: 2 },
-    { id: 3, title: "Laptop Stand", price: 49.99, quantity: 1 }
-  ]);
+  console.log("cartItems rendered with")
+  const { currency, convertPrice } = useCurrencyStore()
+  const { cartItems, updateQuantity } = useCartStore()
 
-  const updateQuantity = (id: number, change: number) => {
-    setCartItems(items => 
-      items.map(item => {
-        if (item.id === id) {
-          const newQuantity = Math.max(0, item.quantity + change);
-          return { ...item, quantity: newQuantity };
-        }
-        return item;
-      }).filter(item => item.quantity > 0)
-    );
-  };
-
-  const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const total = cartItems.reduce(
+    (sum, item) => sum + convertPrice(item.price) * item.quantity,
+    0
+  );
 
   return (
     <Card>
@@ -44,7 +41,10 @@ export default function CartItems() {
             <div key={item.id} className="flex items-center justify-between border-b pb-4">
               <div>
                 <h3 className="font-medium">{item.title}</h3>
-                <p className="text-green-600 font-semibold">${item.price}</p>
+                <p className="text-green-600 font-semibold">
+                  {currencySymbols[currency]}
+                  {convertPrice(item.price).toFixed(2)}
+                </p>
               </div>
               <div className="flex items-center space-x-2">
                 <Button
@@ -68,7 +68,10 @@ export default function CartItems() {
           <div className="pt-4 border-t">
             <div className="flex justify-between items-center">
               <span className="text-lg font-semibold">Total:</span>
-              <span className="text-lg font-bold text-green-600">${total.toFixed(2)}</span>
+              <span className="text-lg font-bold text-green-600">
+                {currencySymbols[currency]}
+                {total.toFixed(2)}
+              </span>
             </div>
           </div>
         </div>

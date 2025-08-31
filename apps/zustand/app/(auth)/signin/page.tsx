@@ -12,6 +12,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import Link from "next/link";
+import { useUserStore } from "@/store/userStore";
 
 const signinSchema = z.object({
   email: z.string().email('Invalid email').min(1, 'Email is required'),
@@ -21,6 +22,7 @@ const signinSchema = z.object({
 type SigninFormData = z.infer<typeof signinSchema>;
 
 export default function SignInPage() {
+  const { setUser } = useUserStore()
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
@@ -39,8 +41,13 @@ export default function SignInPage() {
       const response = await axios.post("/api/user/signin", data);
       
       if (response.data.success) {
-        toast.success("singied in successfully!");
-        // router.push("/dashboard");
+        toast.success("signin in successfully!");
+        setUser({
+          id: response.data.user.id,
+          email: response.data.user.email,
+          name: response.data.user.name
+        })
+        router.push("/dashboard");
       }
     } catch (error: any) {
       if (error.response?.data?.error) {

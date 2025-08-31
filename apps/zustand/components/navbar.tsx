@@ -1,18 +1,27 @@
+import { useCartStore } from "@/store/cartStore";
+import { useCurrencyStore } from "@/store/currencyStore";
+import { useUserStore } from "@/store/userStore";
 import { Button } from "@workspace/ui/components/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@workspace/ui/components/select";
 import { ShoppingCart, LogOut, User } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function Navbar() {
+  console.log("navbar lgo")
+  const router = useRouter()
+  const { logout, user } = useUserStore()
+  const { currency, setCurrency } = useCurrencyStore()
+  const { cartCount } = useCartStore()
+
   const handleLogout = () => {
-    console.log("Logout clicked");
+    logout()
+    toast.success("Logged out successfully!");
+    router.push("/signin");
   };
 
   const handleCart = () => {
-    console.log("Cart clicked");
-  };
-
-  const handleCurrencyChange = (value: string) => {
-    console.log("Currency changed to:", value);
+    router.push('/cart')
   };
 
   return (
@@ -22,20 +31,20 @@ export default function Navbar() {
           <div className="flex items-center space-x-2">
             <User className="h-5 w-5 text-gray-600" />
             <span className="text-sm font-medium text-gray-900">
-              Abdur rahmn
+              {user?.name}
             </span>
           </div>
           
           <div className="flex items-center space-x-3">
-            <Select defaultValue="usd" onValueChange={handleCurrencyChange}>
+            <Select value={currency} onValueChange={setCurrency}>
               <SelectTrigger className="w-20 h-8">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="usd">$</SelectItem>
-                <SelectItem value="lkr">Rs</SelectItem>
-                <SelectItem value="gbp">£</SelectItem>
-                <SelectItem value="eur">€</SelectItem>
+                <SelectItem value="USD">$</SelectItem>
+                <SelectItem value="LKR">Rs</SelectItem>
+                <SelectItem value="GBP">£</SelectItem>
+                <SelectItem value="EUR">€</SelectItem>
               </SelectContent>
             </Select>
 
@@ -48,7 +57,7 @@ export default function Navbar() {
               <ShoppingCart className="h-4 w-4" />
               <span>Cart</span>
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                3
+                {cartCount}
               </span>
             </Button>
             

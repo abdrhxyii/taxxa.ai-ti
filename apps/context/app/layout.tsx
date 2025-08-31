@@ -31,9 +31,7 @@ export default function RootLayout({
         <AuthProvider>
           <CurrencyContextProvider>
             <CartContextProvider>
-                <Providers>
-                  {children}
-                </Providers>
+              {children}
               </CartContextProvider>
             </CurrencyContextProvider>
           </AuthProvider>

@@ -22,7 +22,7 @@ export default function Sidebar() {
   return (
     <div className="w-64 bg-primary text-white border-r h-screen fixed left-0 top-0">
       <div className="p-6">
-        <h2 className="text-xl font-semibold  mb-8">Menu</h2>
+        <h2 className="text-xl font-semibold  mb-8">Zustand Menu</h2>
         
         <nav className="space-y-2">
           
